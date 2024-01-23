@@ -1,0 +1,100 @@
+/* DataEntryForm.css */
+
+.data-entry-table {
+    width: 30%;
+    margin-bottom: 20px;
+  }
+  
+   .data-entry-table h2 {
+    font-size: small;
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight: 100;
+  }
+  
+ 
+  .data-entry-table h2 {
+    font-size: 15px;
+    margin-bottom: 5px;
+  }
+  
+  .data-entry-table td {
+    padding: 5px;
+    border: 2px solid #080000; 
+  }
+  
+  .data-entry-table select,
+  .data-entry-table input[type="text"] {
+    width: calc(100% - 20px);
+    padding: 8px;
+    box-sizing: border-box;
+    font-size: 15px;
+    margin-bottom: 5px;
+  }
+  
+  .button-container {
+    position: fixed;
+    text-align: center;
+    left: 42%;
+    margin-top: -20px; 
+    transform: translateX(-285%);
+  }
+  
+  button {
+    padding: 10px;
+    background-color: #2E7D32;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 10px;
+  }
+  
+  button:hover {
+    background-color: #1B5E20; 
+  }
+  
+  button[type="button"] {
+    background-color: #1565C0; 
+  }
+  
+  button[type="button"]:hover {
+    background-color: #0D47A1; 
+  }
+  
+  form,
+  .form-container {
+    text-align: center;
+  }
+  
+  .notification {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    opacity: 0.9;
+    transition: opacity 0.5s ease-in-out;
+  }
+  
+  .notification.success {
+    background-color: #4caf50;
+  }
+  
+  .notification.error {
+    background-color: #f44336;
+  }
+  
+  .notification-enter {
+    opacity: 0;
+  }
+  
+  .notification-enter-active {
+    opacity: 0.9;
+    transition: opacity 0.5s ease-in-out;
+  }
+  

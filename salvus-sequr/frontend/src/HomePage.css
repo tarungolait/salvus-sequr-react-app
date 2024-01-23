@@ -1,0 +1,48 @@
+/* HomePage.css */
+
+.home-container1 {
+  text-align: center;
+  margin: 20px;
+}
+
+h2 {
+  color: #333;
+}
+
+.home-paragraph1 {
+  color: #666;
+}
+
+nav {
+  margin-top: 20px;
+}
+
+.home-ul1 {
+  list-style: none;
+  padding: 0;
+}
+
+.home-li1 {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.data-entry-box1,
+.product-types-box {
+  border: 2px solid #3498db;
+  padding: 10px;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+.data-entry-link1,
+.product-types-link {
+  text-decoration: none;
+  color: #3498db;
+  font-weight: bold;
+}
+
+.data-entry-link1:hover,
+.product-types-link:hover {
+  color: #2c3e50;
+}
