@@ -228,29 +228,60 @@ def get_product_types():
             cursor.close()
             connection.close()
 
+from flask import jsonify, request
+
 # Fetch product types from the database for the new endpoint
-@app.route('/api/new-product-types', methods=['GET'])
-def get_new_product_types():
-    try:
-        connection = psycopg2.connect(**db_config)
-        cursor = connection.cursor()
+@app.route('/api/new-product-types', methods=['GET', 'PUT'])
+def handle_new_product_types():
+    if request.method == 'GET':
+        # Fetch product types
+        try:
+            connection = psycopg2.connect(**db_config)
+            cursor = connection.cursor()
 
-        postgres_product_types_query = """SELECT * FROM product_types"""
-        cursor.execute(postgres_product_types_query)
-        product_types = cursor.fetchall()
+            postgres_product_types_query = """SELECT * FROM product_types"""
+            cursor.execute(postgres_product_types_query)
+            product_types = cursor.fetchall()
 
-        # Format the data as a list of dictionaries
-        formatted_product_types = [{'id': row[0], 'wallet_type': row[1], 'description': row[2]} for row in product_types]
+            # Format the data as a list of dictionaries
+            formatted_product_types = [{'id': row[0], 'wallet_type': row[1], 'description': row[2]} for row in product_types]
 
-        return jsonify(formatted_product_types)
+            return jsonify(formatted_product_types)
 
-    except Exception as error:
-        return jsonify({'error': str(error)})
+        except Exception as error:
+            return jsonify({'error': str(error)})
 
-    finally:
-        if connection:
-            cursor.close()
-            connection.close()
+        finally:
+            if connection:
+                cursor.close()
+                connection.close()
+
+    elif request.method == 'PUT':
+        # Update product types
+        try:
+            connection = psycopg2.connect(**db_config)
+            cursor = connection.cursor()
+
+            updated_product_types = request.json
+
+            for product_type in updated_product_types:
+                cursor.execute(
+                    "UPDATE product_types SET wallet_type = %s, description = %s WHERE id = %s",
+                    (product_type['wallet_type'], product_type['description'], product_type['id'])
+                )
+
+            connection.commit()
+
+            return jsonify({'message': 'Product types updated successfully'})
+
+        except Exception as error:
+            connection.rollback()  # Rollback changes in case of an error during update
+            return jsonify({'error': str(error)})
+
+        finally:
+            if connection:
+                cursor.close()
+                connection.close()
 
 
 
