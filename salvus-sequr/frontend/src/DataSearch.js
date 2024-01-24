@@ -25,24 +25,24 @@ const DataSearch = () => {
   };
 
   const renderSearchResult = () => {
-    if (!searchResult || searchResult.length === 0) return null;
+    if (!searchResult || searchResult.length === 0 || !searchResult[0]) return null;
   
     const data = searchResult[0];
-    const productDescriptionIndex = searchResult[0].length - 1;
+    const productDescriptionIndex = data.length - 1;
   
     return (
       <div className="search-results shifted-container">
-       <ul className="result-list">
-    <li><span>BLE MAC ID:</span> {data[8]}</li>
-    <li><span>PRODUCT TYPE:</span> {data[2]}</li>
-    <li><span>WALLET COLOR:</span> {data[3]}</li>
-    <li><span>MANUFACTURING DATE:</span> {new Date(data[4]).toDateString()}</li>
-    <li><span>BATCH NUMBER:</span> {data[5]}</li>
-    <li><span>COUNTRY CODE:</span> {data[6]}</li>
-    <li><span>QR CODE:</span> {data[7]}</li>
-    <li><span>BARCODE NO:</span> {data[1]}</li>
-    <li><span>VERSION:</span> {data[9]}</li>
-  </ul>
+        <ul className="result-list">
+          <li><span>BLE MAC ID:</span> {data[8]}</li>
+          <li><span>PRODUCT TYPE:</span> {data[2]}</li>
+          <li><span>WALLET COLOR:</span> {data[3]}</li>
+          <li><span>MANUFACTURING DATE:</span> {new Date(data[4]).toDateString()}</li>
+          <li><span>BATCH NUMBER:</span> {data[5]}</li>
+          <li><span>COUNTRY CODE:</span> {data[6]}</li>
+          <li><span>QR CODE:</span> {data[7]}</li>
+          <li><span>BARCODE NO:</span> {data[1]}</li>
+          <li><span>VERSION:</span> {data[9]}</li>
+        </ul>
   
         <div className="product-description-container">
           <strong>PRODUCT DESCRIPTION:</strong>
@@ -59,6 +59,7 @@ const DataSearch = () => {
       </div>
     );
   };
+  
   
   return (
     <div className="data-search-container">
