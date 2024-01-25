@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useRoutes } from 'react-router-dom';
 import DataEntryForm from './DataEntryForm';
 import DataSearch from './DataSearch';
+import './CombinedDataPage.css'; // Import CSS file for styling
 
 const CombinedDataPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -16,7 +17,8 @@ const CombinedDataPage = () => {
       element: (
         <div className="combined-data-page">
           <header>
-            <h1>Infinicue Solutions Data</h1>
+          <h1 class="company-name">Infinicue Solutions Data</h1>
+
             <nav>
             </nav>
           </header>

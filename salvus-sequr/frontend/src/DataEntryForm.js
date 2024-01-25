@@ -165,6 +165,11 @@ const DataEntryForm = () => {
     }
   };
 
+  const handlePrint = () => {
+    window.print();
+  };
+
+
 
   return (
     <div className="form-container">
@@ -294,6 +299,9 @@ const DataEntryForm = () => {
           <button type="submit">{submitButtonText}</button>
           <button type="button" onClick={() => handleDelete(macIdToDelete)}>
             Delete
+          </button>
+          <button type="button" onClick={handlePrint}>
+            Print
           </button>
         </div>
       </form>

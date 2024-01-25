@@ -1,0 +1,10 @@
+@media print {
+    .data-entry-form,
+    .search-results {
+      display: none;
+    }
+
+    h1 {
+      display: none;
+    }
+  }
