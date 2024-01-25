@@ -1,5 +1,3 @@
-// DataSearch.js
-
 import React, { useState } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,7 +12,6 @@ const DataSearch = () => {
   const handleSearch = async () => {
     try {
       const response = await axios.get(`http://localhost:5000/api/search-data/${searchQuery}`);
-      console.log(response.data);  
       setSearchResult(response.data);
       setError(null);
     } catch (error) {
@@ -24,43 +21,8 @@ const DataSearch = () => {
     }
   };
 
-  const renderSearchResult = () => {
-    if (!searchResult || searchResult.length === 0 || !searchResult[0]) return null;
-  
-    const data = searchResult[0];
-    const productDescriptionIndex = data.length - 1;
-  
-    return (
-      <div className="search-results shifted-container">
-        <ul className="result-list">
-          <li><span>BLE MAC ID:</span> {data[8]}</li>
-          <li><span>PRODUCT TYPE:</span> {data[2]}</li>
-          <li><span>WALLET COLOR:</span> {data[3]}</li>
-          <li><span>MANUFACTURING DATE:</span> {new Date(data[4]).toDateString()}</li>
-          <li><span>BATCH NUMBER:</span> {data[5]}</li>
-          <li><span>COUNTRY CODE:</span> {data[6]}</li>
-          <li><span>QR CODE:</span> {data[7]}</li>
-          <li><span>BARCODE NO:</span> {data[1]}</li>
-          <li><span>VERSION:</span> {data[9]}</li>
-        </ul>
-  
-        <div className="product-description-container">
-          <strong>PRODUCT DESCRIPTION:</strong>
-          <p>{data[productDescriptionIndex] || 'N/A'}</p>
-        </div>
-  
-        <div className="barcode-container">
-          {data[10] && <img src={data[10]} alt="Barcode" className="barcode-image image-preview" />}
-        </div>
-  
-        <div className="qrcode-container">
-          {data[11] && <img src={data[11]} alt="QR Code" className="qrcode-image image-preview" />}
-        </div>
-      </div>
-    );
-  };
-  
-  
+  const productDescriptionIndex = searchResult ? searchResult[0].length - 1 : -1;
+
   return (
     <div className="data-search-container">
       <div className="search-section">
@@ -79,7 +41,36 @@ const DataSearch = () => {
 
       {error && <div className="error-message">{error}</div>}
 
-      {renderSearchResult()}
+      {searchResult && searchResult.length > 0 && (
+        <div className="search-results shifted-container">
+          <ul className="result-list">
+            <li><span>BLE MAC ID:</span> {searchResult[0][8]}</li>
+            <li><span>PRODUCT TYPE:</span> {searchResult[0][2]}</li>
+            <li><span>WALLET COLOR:</span> {searchResult[0][3]}</li>
+            <li><span>MANUFACTURING DATE:</span> {new Date(searchResult[0][4]).toDateString()}</li>
+            <li><span>BATCH NUMBER:</span> {searchResult[0][5]}</li>
+            <li><span>COUNTRY CODE:</span> {searchResult[0][6]}</li>
+            <li><span>QR CODE:</span> {searchResult[0][7]}</li>
+            <li><span>BARCODE NO:</span> {searchResult[0][1]}</li>
+            <li><span>VERSION:</span> {searchResult[0][9]}</li>
+          </ul>
+        </div>
+      )}
+
+      {searchResult && searchResult.length > 0 && (
+        <div className="data-preview-container">
+          <div className="product-description-container">
+            <strong>PRODUCT DESCRIPTION:</strong>
+            <p>{searchResult[0][productDescriptionIndex] || 'N/A'}</p>
+          </div>
+          <div className="barcode-container">
+            {searchResult[0][10] && <img src={searchResult[0][10]} alt="Barcode" className="barcode-image image-preview" />}
+          </div>
+          <div className="qrcode-container">
+            {searchResult[0][11] && <img src={searchResult[0][11]} alt="QR Code" className="qrcode-image image-preview" />}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
