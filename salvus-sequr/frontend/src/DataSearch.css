@@ -139,3 +139,12 @@ h2 {
   font-family: 'Courier New', Courier, monospace;
 }
 
+.no-data-message {
+  position: absolute; 
+  bottom: 10px; 
+  left: 0; 
+  width: 100%; 
+  text-align: center; 
+  color: #ff0000; 
+  font-size: 14px; 
+}

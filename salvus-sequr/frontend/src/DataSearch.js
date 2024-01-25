@@ -21,7 +21,7 @@ const DataSearch = () => {
     }
   };
 
-  const productDescriptionIndex = searchResult ? searchResult[0].length - 1 : -1;
+  const productDescriptionIndex = searchResult && searchResult[0] ? searchResult[0].length - 1 : -1;
 
   return (
     <div className="data-search-container">
@@ -57,7 +57,7 @@ const DataSearch = () => {
         </div>
       )}
 
-      {searchResult && searchResult.length > 0 && (
+      {searchResult && searchResult.length > 0 ? (
         <div className="data-preview-container">
           <div className="product-description-container">
             <strong>PRODUCT DESCRIPTION:</strong>
@@ -70,6 +70,8 @@ const DataSearch = () => {
             {searchResult[0][11] && <img src={searchResult[0][11]} alt="QR Code" className="qrcode-image image-preview" />}
           </div>
         </div>
+      ) : (
+        <div className="no-data-message">No matching data found for the entered query.</div>
       )}
     </div>
   );
