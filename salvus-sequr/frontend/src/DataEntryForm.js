@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
-
 import "./DataEntryForm.css";
 
 const DataEntryForm = () => {
@@ -17,44 +16,34 @@ const DataEntryForm = () => {
   });
 
   const [macIdToDelete, setMacIdToDelete] = useState("");
-  const [submitButtonText, setSubmitButtonText] = useState("Submit");
-  const [notification, setNotification] = useState(null);
-  const [locationUrls, setLocationUrls] = useState({
-    barcode_location: "",
-    qrcode_location: "",
-  });
-
   const [productTypes, setProductTypes] = useState([]);
   const [walletColors, setWalletColors] = useState([]);
   const [versions, setVersions] = useState([]);
+  const [notification, setNotification] = useState(null);
 
   useEffect(() => {
-    // Fetch product types
     axios.get("http://localhost:5000/api/product-types")
       .then(response => setProductTypes(response.data))
       .catch(error => console.error("Error fetching product types:", error));
 
-    // Fetch wallet colors
     axios.get("http://localhost:5000/api/wallet-colors")
       .then(response => setWalletColors(response.data))
       .catch(error => console.error("Error fetching wallet colors:", error));
 
-    // Fetch versions
     axios.get("http://localhost:5000/api/versions")
       .then(response => setVersions(response.data))
       .catch(error => console.error("Error fetching versions:", error));
 
     const lastUsedQRCode = localStorage.getItem("lastUsedQRCode") || "00000";
     const lastUsedBarcode = localStorage.getItem("lastUsedBarcode") || "";
-
-    setFormData((prevData) => ({
+    setFormData(prevData => ({
       ...prevData,
       qrcode: lastUsedQRCode,
       barcodeno: lastUsedBarcode,
     }));
   }, []);
 
-  const handleChange = (e) => {
+  const handleChange = useCallback((e) => {
     const { name, value } = e.target;
     let updatedFormData = { ...formData, [name]: value };
 
@@ -66,26 +55,26 @@ const DataEntryForm = () => {
     }
 
     setFormData(updatedFormData);
-  };
+  }, [formData]);
 
-  const validateBleMacIdFormat = (macId) => {
-    const macIdRegex = /^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$/;
-    return macIdRegex.test(macId);
-  };
-
-  const showNotification = (message, type = "success") => {
+  const showNotification = useCallback((message, type = "success") => {
     setNotification({ message, type });
     setTimeout(() => {
       setNotification(null);
     }, 3000);
-  };
+  }, []);
+
+  const validateBleMacIdFormat = useCallback((macId) => {
+    const macIdRegex = /^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$/;
+    return macIdRegex.test(macId);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const requiredFields = ["blemacid", "wallet_type", "walletcolor", "batchnum", "version"];
     const isFormValid = requiredFields.every((field) => formData[field].trim() !== "");
-  
+
     if (!isFormValid) {
       showNotification("Please fill in all required fields", "error");
       return;
@@ -94,7 +83,7 @@ const DataEntryForm = () => {
       showNotification("Invalid BLE MAC ID format", "error");
       return;
     }
-  
+
     try {
       // Check if the same blemacid already exists in the table
       const checkDuplicateResponse = await axios.get(`http://localhost:5000/api/check-duplicate/${formData.blemacid}`);
@@ -102,33 +91,32 @@ const DataEntryForm = () => {
         showNotification("Duplicate entry: Blemacid already exists", "error");
         return;
       }
-  
+
       // Continue with data submission if not a duplicate
       const response = await axios.post("http://localhost:5000/api/data-entry", {
         ...formData,
-        ...locationUrls,
       });
-  
+
       // Check if the data entry was successful
       if (response.data.message === "Record(s) inserted successfully into data_entry table") {
         // Trigger code generation
         const generateCodesResponse = await axios.post("http://localhost:5000/api/generate-codes", {
           ...formData,
         });
-  
+
         // Log the message from the code generation response
         console.log(generateCodesResponse.data.message);
       }
-  
+
       // Update local storage and reset form data
       const nextQRCodeValue = String(Number(formData.qrcode) + 1).padStart(5, "0");
       localStorage.setItem("lastUsedQRCode", nextQRCodeValue);
-  
+
       const countryCode = "890";
       const currentYear = new Date().getFullYear();
       const nextBarcodeValue = `${countryCode}${currentYear}${nextQRCodeValue}`;
       localStorage.setItem("lastUsedBarcode", nextBarcodeValue);
-  
+
       setFormData({
         blemacid: "",
         wallet_type: "",
@@ -140,11 +128,11 @@ const DataEntryForm = () => {
         barcodeno: nextBarcodeValue,
         version: "",
       });
-  
+
       showNotification("Data added successfully", "success");
     } catch (error) {
       console.error("Error submitting data:", error.message);
-  
+
       if (error.response && error.response.status === 409) {
         showNotification("Duplicate entry: Blemacid already exists", "error");
       } else {
@@ -152,7 +140,6 @@ const DataEntryForm = () => {
       }
     }
   };
-  
 
   const handleDelete = async (macId) => {
     try {
@@ -168,8 +155,6 @@ const DataEntryForm = () => {
   const handlePrint = () => {
     window.print();
   };
-
-
 
   return (
     <div className="form-container">
@@ -296,13 +281,9 @@ const DataEntryForm = () => {
           </tbody>
         </table>
         <div className="button-container">
-          <button type="submit">{submitButtonText}</button>
-          <button type="button" onClick={() => handleDelete(macIdToDelete)}>
-            Delete
-          </button>
-          <button type="button" onClick={handlePrint}>
-            Print
-          </button>
+          <button type="submit">Submit</button>
+          <button type="button" onClick={() => handleDelete(macIdToDelete)}>Delete</button>
+          <button type="button" onClick={handlePrint}>Print</button>
         </div>
       </form>
       {notification && (
@@ -313,6 +294,5 @@ const DataEntryForm = () => {
     </div>
   );
 };
-
 
 export default DataEntryForm;
