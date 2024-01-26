@@ -17,7 +17,8 @@ const CombinedDataPage = () => {
       element: (
         <div className="combined-data-page">
           <header>
-          <h1 class="company-name">Infinicue Solutions Data</h1>
+          <h1 className="company-name">Infinicue Solutions Data</h1>
+
 
             <nav>
             </nav>
