@@ -18,23 +18,22 @@ h2 {
   margin-right: 20px;
 }
 
-.search-input {
-  width: 100%;
+.search-input, .search-button {
   padding: 10px;
-  font-size: 16px; 
-  font-family: 'Your Preferred Font', sans-serif; 
-  border: 1px solid #ddd;
+  font-size: 16px;
+  font-family: 'Your Preferred Font', sans-serif;
   border-radius: 5px;
 }
 
+.search-input {
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
 .search-button {
-  padding: 10px;
   background-color: #007bff;
   color: #fff;
-  font-size: 16px;
-  font-family: 'Your Preferred Font', sans-serif; 
   border: none;
-  border-radius: 5px;
   cursor: pointer;
 }
 
@@ -42,11 +41,11 @@ h2 {
   background-color: #0056b3;
 }
 
-.error-message {
+.error-message, .no-data-message {
   color: #ff0000;
   margin-bottom: 20px;
-  font-size: 14px; 
-  font-family: 'Your Preferred Font', sans-serif; 
+  font-size: 14px;
+  font-family: 'Your Preferred Font', sans-serif;
 }
 
 .search-results {
@@ -67,15 +66,14 @@ h2 {
 .result-list {
   list-style: none;
   padding: 0;
-  margin-left: 480px; 
-  margin-top: -420px; 
+  margin-left: 480px;
+  margin-top: -420px;
 }
-
 
 .result-list li {
   margin-bottom: 10px;
   font-size: 20px;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: 'Lucida Sans', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .result-list li span {
@@ -84,42 +82,34 @@ h2 {
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
+.barcode-container, .qrcode-container, .product-description-container {
+  position: fixed;
+  margin-top: 30px;
+}
 
 .barcode-container {
-  position: fixed;
-  top: 320px; 
-  right: 380px; 
-  display: flex;
-  justify-content: space-between;
-  margin-top: 30px;
+  top: 350px;
+  right: 380px;
 }
 
 .qrcode-container {
-  position: fixed;
-  top: 100px; 
-  right: 150px; 
-  display: flex;
-  justify-content: space-between;
-  margin-top: 30px;
-  padding: 20px; 
+  top: 100px;
+  right: 150px;
+  padding: 20px;
 }
 
-.qrcode-image {
-  max-width: 100%;
-  height: auto;
-  padding: 5px;
-  background-color: white;
-  border: 1px solid #ddd;
-  width: 3cm;
-  height: 3cm;
-}
-
-.barcode-image,
-.qrcode-image {
+.qrcode-image, .barcode-image {
   max-width: 100%;
   height: auto;
   margin-right: 10px;
   border: 1px solid #ddd;
+}
+
+.qrcode-image {
+  width: 3cm;
+  height: 3cm;
+  background-color: white;
+  padding: 5px;
 }
 
 .barcode-image {
@@ -127,9 +117,8 @@ h2 {
 }
 
 .product-description-container {
-  position: fixed;
-  top: 100px; 
-  right: 350px; 
+  top: 100px;
+  right: 350px;
   width: 200px;
   height: 200px;
   padding: 20px;
@@ -137,14 +126,4 @@ h2 {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   font-size: 14px;
   font-family: 'Courier New', Courier, monospace;
-}
-
-.no-data-message {
-  position: absolute; 
-  bottom: 10px; 
-  left: 0; 
-  width: 100%; 
-  text-align: center; 
-  color: #ff0000; 
-  font-size: 14px; 
 }

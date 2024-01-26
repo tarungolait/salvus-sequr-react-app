@@ -21,7 +21,42 @@ const DataSearch = () => {
     }
   };
 
-  const productDescriptionIndex = searchResult && searchResult[0] ? searchResult[0].length - 1 : -1;
+  const renderSearchResults = () => {
+    if (!searchResult || searchResult.length === 0) {
+      return <div className="no-data-message">No matching data found for the entered query.</div>;
+    }
+
+    return (
+      <>
+        <div className="search-results shifted-container">
+          <ul className="result-list">
+            <li><span>BLE MAC ID:</span> {searchResult[0][8]}</li>
+            <li><span>PRODUCT TYPE:</span> {searchResult[0][2]}</li>
+            <li><span>WALLET COLOR:</span> {searchResult[0][3]}</li>
+            <li><span>MANUFACTURING DATE:</span> {new Date(searchResult[0][4]).toDateString()}</li>
+            <li><span>BATCH NUMBER:</span> {searchResult[0][5]}</li>
+            <li><span>COUNTRY CODE:</span> {searchResult[0][6]}</li>
+            <li><span>QR CODE:</span> {searchResult[0][7]}</li>
+            <li><span>BARCODE NO:</span> {searchResult[0][1]}</li>
+            <li><span>VERSION:</span> {searchResult[0][9]}</li>
+          </ul>
+        </div>
+
+        <div className="data-preview-container">
+          <div className="product-description-container">
+            <strong>PRODUCT DESCRIPTION:</strong>
+            <p>{searchResult[0][searchResult[0].length - 1] || 'N/A'}</p>
+          </div>
+          <div className="barcode-container">
+            {searchResult[0][10] && <img src={searchResult[0][10]} alt="Barcode" className="barcode-image image-preview" />}
+          </div>
+          <div className="qrcode-container">
+            {searchResult[0][11] && <img src={searchResult[0][11]} alt="QR Code" className="qrcode-image image-preview" />}
+          </div>
+        </div>
+      </>
+    );
+  };
 
   return (
     <div className="data-search-container">
@@ -41,38 +76,7 @@ const DataSearch = () => {
 
       {error && <div className="error-message">{error}</div>}
 
-      {searchResult && searchResult.length > 0 && (
-        <div className="search-results shifted-container">
-          <ul className="result-list">
-            <li><span>BLE MAC ID:</span> {searchResult[0][8]}</li>
-            <li><span>PRODUCT TYPE:</span> {searchResult[0][2]}</li>
-            <li><span>WALLET COLOR:</span> {searchResult[0][3]}</li>
-            <li><span>MANUFACTURING DATE:</span> {new Date(searchResult[0][4]).toDateString()}</li>
-            <li><span>BATCH NUMBER:</span> {searchResult[0][5]}</li>
-            <li><span>COUNTRY CODE:</span> {searchResult[0][6]}</li>
-            <li><span>QR CODE:</span> {searchResult[0][7]}</li>
-            <li><span>BARCODE NO:</span> {searchResult[0][1]}</li>
-            <li><span>VERSION:</span> {searchResult[0][9]}</li>
-          </ul>
-        </div>
-      )}
-
-      {searchResult && searchResult.length > 0 ? (
-        <div className="data-preview-container">
-          <div className="product-description-container">
-            <strong>PRODUCT DESCRIPTION:</strong>
-            <p>{searchResult[0][productDescriptionIndex] || 'N/A'}</p>
-          </div>
-          <div className="barcode-container">
-            {searchResult[0][10] && <img src={searchResult[0][10]} alt="Barcode" className="barcode-image image-preview" />}
-          </div>
-          <div className="qrcode-container">
-            {searchResult[0][11] && <img src={searchResult[0][11]} alt="QR Code" className="qrcode-image image-preview" />}
-          </div>
-        </div>
-      ) : (
-        <div className="no-data-message">No matching data found for the entered query.</div>
-      )}
+      {renderSearchResults()}
     </div>
   );
 };
