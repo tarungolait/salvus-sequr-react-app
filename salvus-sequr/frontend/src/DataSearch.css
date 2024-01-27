@@ -41,13 +41,6 @@ h2 {
   background-color: #0056b3;
 }
 
-.error-message, .no-data-message {
-  color: #ff0000;
-  margin-bottom: 20px;
-  font-size: 14px;
-  font-family: 'Your Preferred Font', sans-serif;
-}
-
 .search-results {
   margin-top: 20px;
   opacity: 0;
