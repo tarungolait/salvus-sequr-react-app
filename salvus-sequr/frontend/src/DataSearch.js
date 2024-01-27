@@ -7,23 +7,20 @@ import './DataSearch.css';
 const DataSearch = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResult, setSearchResult] = useState(null);
-  const [error, setError] = useState(null);
 
   const handleSearch = async () => {
     try {
       const response = await axios.get(`http://localhost:5000/api/search-data/${searchQuery}`);
       setSearchResult(response.data);
-      setError(null);
     } catch (error) {
       console.error('Error searching data:', error);
       setSearchResult(null);
-      setError('Error searching data. Please try again.');
     }
   };
 
   const renderSearchResults = () => {
     if (!searchResult || searchResult.length === 0) {
-      return <div className="no-data-message">No matching data found for the entered query.</div>;
+      return null; // Return null when no search results
     }
 
     return (
@@ -73,8 +70,6 @@ const DataSearch = () => {
           <FontAwesomeIcon icon={faSearch} />
         </button>
       </div>
-
-      {error && <div className="error-message">{error}</div>}
 
       {renderSearchResults()}
     </div>
