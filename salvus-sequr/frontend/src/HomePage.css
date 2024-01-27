@@ -1,6 +1,6 @@
 /* HomePage.css */
 
-.home-container1 {
+.home-container {
   text-align: center;
   margin: 20px;
 }
@@ -9,7 +9,7 @@ h2 {
   color: #333;
 }
 
-.home-paragraph1 {
+.home-paragraph {
   color: #666;
 }
 
@@ -17,17 +17,17 @@ nav {
   margin-top: 20px;
 }
 
-.home-ul1 {
+.home-ul {
   list-style: none;
   padding: 0;
 }
 
-.home-li1 {
+.home-li {
   display: inline-block;
   margin-right: 20px;
 }
 
-.data-entry-box1,
+.data-entry-box,
 .product-types-box {
   border: 2px solid #3498db;
   padding: 10px;
@@ -35,14 +35,12 @@ nav {
   display: inline-block;
 }
 
-.data-entry-link1,
-.product-types-link {
+.home-link {
   text-decoration: none;
   color: #3498db;
   font-weight: bold;
 }
 
-.data-entry-link1:hover,
-.product-types-link:hover {
+.home-link:hover {
   color: #2c3e50;
 }

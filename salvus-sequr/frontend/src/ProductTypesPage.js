@@ -1,5 +1,3 @@
-// ProductTypesPage.js
-
 import React, { useState, useEffect } from 'react';
 import './ProductTypesPage.css';
 
@@ -30,7 +28,6 @@ const ProductTypesPage = () => {
       setError(null);
     } catch (error) {
       console.error('Error fetching data:', error);
-      setProductTypes([]);
       setError('Failed to fetch product types. Please try again later.');
     }
   };
@@ -83,7 +80,6 @@ const ProductTypesPage = () => {
           {editMode ? (
             <input
               type="text"
-              name={`productType${productType.id}`}
               value={productType.wallet_type}
               onChange={(e) => handleInputChange(e, productType.id, 'wallet_type')}
             />
@@ -94,7 +90,6 @@ const ProductTypesPage = () => {
         <td>
           {editMode ? (
             <textarea
-              name={`description${productType.id}`}
               value={productType.description}
               onChange={(e) => handleInputChange(e, productType.id, 'description')}
             ></textarea>

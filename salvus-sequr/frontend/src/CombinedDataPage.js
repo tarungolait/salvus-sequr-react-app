@@ -17,11 +17,8 @@ const CombinedDataPage = () => {
       element: (
         <div className="combined-data-page">
           <header>
-          <h1 className="company-name">Infinicue Solutions Data</h1>
-
-
-            <nav>
-            </nav>
+            <h1 className="company-name">Infinicue Solutions Data</h1>
+            {/* Additional navigation components can be added here */}
           </header>
           <section className="data-entry-form">
             <DataEntryForm searchQuery={searchQuery} />
